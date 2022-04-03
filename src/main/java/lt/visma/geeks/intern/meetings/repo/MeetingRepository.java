@@ -1,6 +1,7 @@
 package lt.visma.geeks.intern.meetings.repo;
 
 import lt.visma.geeks.intern.meetings.model.Attendee;
+import lt.visma.geeks.intern.meetings.model.FilterParams;
 import lt.visma.geeks.intern.meetings.model.Meeting;
 
 import java.util.ArrayList;
@@ -31,8 +32,11 @@ public class MeetingRepository {
         }
         return meetingOption.get();
     }
-
     public List<Meeting> findMeetings() {
+        return meetingList;
+    }
+
+    public List<Meeting> findMeetings(FilterParams filter) {
         return meetingList;
     }
 
