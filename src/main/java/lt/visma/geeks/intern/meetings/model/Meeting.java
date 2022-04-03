@@ -6,6 +6,16 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Meeting POJO.
+ *
+ * @author Emilis Margevicius
+ * @version 0.1.0
+ * @since 0.1.0
+ * @see MeetingType
+ * @see MeetingCategory
+ * @see Attendee
+ */
 public class Meeting {
     private int id;
     private String name;

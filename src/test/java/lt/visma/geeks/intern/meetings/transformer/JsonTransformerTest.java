@@ -1,10 +1,7 @@
 package lt.visma.geeks.intern.meetings.transformer;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import lt.visma.geeks.intern.meetings.model.Attendee;
-import lt.visma.geeks.intern.meetings.model.Meeting;
-import lt.visma.geeks.intern.meetings.model.MeetingCategory;
-import lt.visma.geeks.intern.meetings.model.MeetingType;
+import lt.visma.geeks.intern.meetings.model.*;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.junit.jupiter.api.Test;
@@ -15,6 +12,16 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * JsonTransformer testing.
+ *
+ * @author Emilis Margevicius
+ * @version 0.1.0
+ * @since 0.1.0
+ * @see Attendee
+ * @see Meeting
+ * @see JsonTransformer
+ */
 class JsonTransformerTest {
 
     @Test
@@ -106,7 +113,6 @@ class JsonTransformerTest {
             fail("Failed to parse to JSON");
             e.printStackTrace();
         } finally {
-            System.out.println(json);
             assertEquals(expectedValue, json);
         }
     }

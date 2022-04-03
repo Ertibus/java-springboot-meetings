@@ -16,21 +16,40 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+/**
+ * Meeting repository manager.
+ *
+ * @author Emilis Margevicius
+ * @version 0.1.0
+ * @since 0.1.0
+ * @see Meeting
+ * @see JsonTransformer
+ */
 public class MeetingRepository {
     private final static String DEFAULT_JSON = "database.json";
     private static List<Meeting> meetingList;
     private final String jsonFile;
 
+    /**
+     * Initialize default repo
+     */
     public MeetingRepository() {
         this(DEFAULT_JSON);
     }
 
+    /**
+     * Construct a new repository with a custom JSON file
+     * @param jsonFile
+     */
     public MeetingRepository(String jsonFile) {
         this.jsonFile = jsonFile;
         meetingList = new ArrayList<>();
         loadData();
     }
 
+    /**
+     * Write JSON data
+     */
     private void saveData() {
         try(FileWriter file = new FileWriter(jsonFile)) {
             String json = JsonTransformer.toJsonString(meetingList);
@@ -40,6 +59,9 @@ public class MeetingRepository {
         }
     }
 
+    /**
+     * Load JSON data
+     */
     private void loadData() {
         File f = new File(jsonFile);
         if(!f.exists() || f.isDirectory() || f.length() == 0) { return; }
@@ -52,6 +74,12 @@ public class MeetingRepository {
         }
     }
 
+    /**
+     * Find a meeting by its ID
+     * @param id of the meeting
+     * @return Meeting
+     * @see Meeting
+     */
     public Meeting findMeeting(int id) {
         Optional<Meeting> meetingOption = meetingList.stream().filter(meet -> meet.getId() == id).findFirst();
         if (meetingOption.isEmpty()) {
@@ -60,10 +88,22 @@ public class MeetingRepository {
         return meetingOption.get();
     }
 
+    /**
+     * Find all meetings
+     * @return a list of meetings
+     * @see Meeting
+     */
     public List<Meeting> findMeetings() {
         return meetingList;
     }
 
+    /**
+     * Find meetings and filter them by the given params.
+     * @param filter - what to filter by
+     * @return a list of meetings
+     * @see Meeting
+     * @see FilterParams
+     */
     public List<Meeting> findMeetings(FilterParams filter) {
         Stream<Meeting> meetingStream = meetingList.stream();
 

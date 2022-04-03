@@ -12,6 +12,16 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Main MeetingRepository testing.
+ *
+ * @author Emilis Margevicius
+ * @version 0.1.0
+ * @since 0.1.0
+ * @see MeetingRepository
+ * @see FilterParams
+ * @see Meeting
+ */
 class MeetingRepositoryTest {
     private final static String TESTING_JSON = "test_database.json";
     private MeetingRepository repository;

@@ -13,6 +13,14 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Meeting repository manager.
+ *
+ * @author Emilis Margevicius
+ * @version 0.1.0
+ * @since 0.1.0
+ * @see Meeting
+ */
 public class JsonTransformer {
     public static List<Meeting> fromJsonArray(JSONArray jsonArray) {
         List<Meeting> meetingList = new ArrayList<Meeting>();
