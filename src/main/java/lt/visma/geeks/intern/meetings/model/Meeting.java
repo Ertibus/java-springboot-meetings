@@ -28,7 +28,7 @@ public class Meeting {
     }
 
     public Meeting() {
-        this(-1, "Meetas", "Jono Java Meetas", new Attendee(), MeetingCategory.CODE_MONKEY, MeetingType.LIVE, LocalDateTime.now(), LocalDateTime.now().plusHours(1), new ArrayList<>());
+        this(-1, "Meetas", "Jono Java Meetas", new Attendee(), MeetingCategory.CODE_MONKEY, MeetingType.LIVE, LocalDateTime.now(), LocalDateTime.now().plusDays(1), new ArrayList<>());
     }
 
     public int getId() {
