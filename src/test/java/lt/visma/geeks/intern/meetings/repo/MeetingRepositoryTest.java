@@ -52,8 +52,8 @@ class MeetingRepositoryTest {
         repository.addMeeting(meeting1);
         repository.addMeeting(meeting2);
         //
-        Attendee attendee = new Attendee();
-        attendee.setTime(time.plusMinutes(10));
+        Attendee attendee = new Attendee(0, "Jonas", time.plusMinutes(10));
+        assertEquals(0, repository.findMeeting(meeting1.getId()).getAttendees().size());
         repository.addAttendee(meeting1.getId(), attendee);
         assertEquals(1, repository.findMeeting(meeting1.getId()).getAttendees().size());
         assertEquals("This person is already in the meeting!", repository.addAttendee(meeting1.getId(), attendee));
@@ -66,8 +66,7 @@ class MeetingRepositoryTest {
         Meeting meeting = new Meeting();
         LocalDateTime time = meeting.getStartDate();
         Attendee attendee1 = new Attendee();
-        Attendee attendee2 = new Attendee();
-        attendee2.setId(attendee1.getId() + 1);
+        Attendee attendee2 = new Attendee(attendee1.getId() + 2, "Jonas", time);
         meeting.setResponsiblePerson(attendee1);
 
         repository.addMeeting(meeting);
