@@ -102,4 +102,24 @@ public class Meeting {
     public void setAttendees(List<Attendee> attendees) {
         this.attendees = attendees;
     }
+
+    /**
+     * Override for toString() method from {@link java.lang.Object}
+     *
+     * @return a string representation of the object.
+     * @see java.lang.Object
+     */
+    @Override
+    public String toString() {
+        return String.format("\tID:\t\t%d\n" +
+                "\tName:\t\t%s\n" +
+                "\tResponsible:\t%s\n" +
+                "\tDescription: \t%s\n" +
+                "\tCategory: \t%s\n" +
+                "\tType: \t%s\n" +
+                "\tStart: \t%s\n" +
+                "\tEnd: \t%s\n" +
+                "\tAttendees: \t%s\n"
+                , id, name, responsiblePersonId, description, category.toString(), type.toString(), startDate.toString(), endDate.toString(), attendees.toString());
+    }
 }

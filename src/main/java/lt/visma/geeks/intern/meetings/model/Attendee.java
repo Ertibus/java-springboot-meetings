@@ -28,4 +28,18 @@ public class Attendee {
     public LocalDateTime getTime() {
         return time;
     }
+
+    /**
+     * Override for toString() method from {@link java.lang.Object}
+     *
+     * @return a string representation of the object.
+     * @see java.lang.Object
+     */
+    @Override
+    public String toString() {
+        return String.format("\t\tID:\t\t%d\n" +
+                        "\t\tName:\t\t%s\n" +
+                        "\t\tdate: \t%s\n"
+                , id, name, time);
+    }
 }
