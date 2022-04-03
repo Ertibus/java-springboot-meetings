@@ -42,7 +42,7 @@ public class MeetingRepository {
         if (filter.getResponsiblePersonId().isPresent()) {
             int value = filter.getResponsiblePersonId().get();
             System.out.println(value);
-            meetingStream = meetingStream.filter(meeting -> meeting.getResponsiblePerson().getId() == value);
+            meetingStream = meetingStream.filter(meeting -> meeting.getResponsiblePersonId() == value);
         }
         if (filter.getDescription().isPresent()) {
             String description = filter.getDescription().get();
@@ -79,7 +79,7 @@ public class MeetingRepository {
 
     public void removeMeeting(int id, int responsibleId) {
         Meeting meeting = findMeeting(id);
-        if (meeting == null || meeting.getResponsiblePerson().getId() != responsibleId) { return; }
+        if (meeting == null || meeting.getResponsiblePersonId() != responsibleId) { return; }
         meetingList.remove(meeting);
     }
 
@@ -115,7 +115,7 @@ public class MeetingRepository {
         int index = meetingList.indexOf(meeting);
 
         // Is owner
-        if (meeting.getResponsiblePerson().getId() == attendeeId) {
+        if (meeting.getResponsiblePersonId() == attendeeId) {
             return;
         }
         Stream<Attendee> attendeeStream = meeting.getAttendees().stream();

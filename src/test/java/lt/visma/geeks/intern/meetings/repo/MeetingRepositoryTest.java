@@ -38,9 +38,9 @@ class MeetingRepositoryTest {
         Meeting meeting = new Meeting();
         repository.addMeeting(meeting);
         assertEquals(1, repository.findMeetings().size());
-        repository.removeMeeting(meeting.getId(), meeting.getResponsiblePerson().getId() + 1);
+        repository.removeMeeting(meeting.getId(), meeting.getResponsiblePersonId() + 1);
         assertEquals(1, repository.findMeetings().size());
-        repository.removeMeeting(meeting.getId(), meeting.getResponsiblePerson().getId());
+        repository.removeMeeting(meeting.getId(), meeting.getResponsiblePersonId());
         assertEquals(0, repository.findMeetings().size());
     }
 
@@ -68,7 +68,7 @@ class MeetingRepositoryTest {
         LocalDateTime time = meeting.getStartDate();
         Attendee attendee1 = new Attendee();
         Attendee attendee2 = new Attendee(attendee1.getId() + 2, "Jonas", time);
-        meeting.setResponsiblePerson(attendee1);
+        meeting.setResponsiblePersonId(attendee1.getId());
 
         repository.addMeeting(meeting);
         repository.addAttendee(meeting.getId(), attendee1);
@@ -106,18 +106,18 @@ class MeetingRepositoryTest {
 
     @Test
     void findMeetingsByResponsiblePerson() {
-        Attendee attendee1 = new Attendee(0, "Jonas", LocalDateTime.now());
-        Attendee attendee2 = new Attendee(1, "Tomas", LocalDateTime.now());
+        int attendeeId1 = 0;
+        int attendeeId2 = 1;
 
         Meeting meeting1 = new Meeting();
-        meeting1.setResponsiblePerson(attendee1);
+        meeting1.setResponsiblePersonId(attendeeId1);
 
         Meeting meeting2 = new Meeting();
-        meeting2.setResponsiblePerson(attendee2);
+        meeting2.setResponsiblePersonId(attendeeId2);
         repository.addMeeting(meeting1);
         repository.addMeeting(meeting2);
 
-        FilterParams filter = new FilterParams.Builder().responsiblePersonId(attendee1.getId()).build();
+        FilterParams filter = new FilterParams.Builder().responsiblePersonId(attendeeId1).build();
 
         int found = repository.findMeetings().size();
         assertEquals(2, found);

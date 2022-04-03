@@ -8,18 +8,18 @@ public class Meeting {
     private int id;
     private String name;
     private String description;
-    private Attendee responsiblePerson;
+    private int responsiblePersonId;
     private MeetingCategory category;
     private MeetingType type;
     private LocalDateTime startDate;
     private LocalDateTime endDate;
     private List<Attendee> attendees;
 
-    public Meeting(int id, String name, String description, Attendee responsiblePerson, MeetingCategory category, MeetingType type, LocalDateTime startDate, LocalDateTime endDate, List<Attendee> attendees) {
+    public Meeting(int id, String name, String description, int responsiblePersonId, MeetingCategory category, MeetingType type, LocalDateTime startDate, LocalDateTime endDate, List<Attendee> attendees) {
         this.id = id;
         this.name = name;
         this.description = description;
-        this.responsiblePerson = responsiblePerson;
+        this.responsiblePersonId = responsiblePersonId;
         this.category = category;
         this.type = type;
         this.startDate = startDate;
@@ -28,7 +28,7 @@ public class Meeting {
     }
 
     public Meeting() {
-        this(-1, "Meetas", "Jono Java Meetas", new Attendee(), MeetingCategory.CODE_MONKEY, MeetingType.LIVE, LocalDateTime.now(), LocalDateTime.now().plusDays(1), new ArrayList<>());
+        this(-1, "Meetas", "Jono Java Meetas", -1, MeetingCategory.CODE_MONKEY, MeetingType.LIVE, LocalDateTime.now(), LocalDateTime.now().plusDays(1), new ArrayList<>());
     }
 
     public int getId() {
@@ -55,12 +55,12 @@ public class Meeting {
         this.description = description;
     }
 
-    public Attendee getResponsiblePerson() {
-        return responsiblePerson;
+    public int getResponsiblePersonId() {
+        return responsiblePersonId;
     }
 
-    public void setResponsiblePerson(Attendee responsiblePerson) {
-        this.responsiblePerson = responsiblePerson;
+    public void setResponsiblePersonId(int responsiblePersonId) {
+        this.responsiblePersonId = responsiblePersonId;
     }
 
     public MeetingCategory getCategory() {
