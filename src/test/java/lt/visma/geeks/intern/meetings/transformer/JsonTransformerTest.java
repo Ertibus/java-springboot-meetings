@@ -84,8 +84,8 @@ class JsonTransformerTest {
         String endDate = "2022-04-03T15:36:20.00397763";
         List<Attendee> attendees = new ArrayList<>();
 
-        String expectedValue = "[{\"id\":0,\"name\":\"Test\",\"description\":\"Performing a test\",\"responsiblePersonId\":0,\"category\":\"CODE_MONKEY\",\"type\":\"LIVE\",\"startDate\":[2022,4,2,15,36,20,3977630],\"endDate\":[2022,4,3,15,36,20,3977630],\"attendees\":[]},{\"id\":0,\"name\":\"Test\",\"description\":\"Performing a test\",\"responsiblePersonId\":0,\"category\":\"CODE_MONKEY\",\"type\":\"LIVE\",\"startDate\":[2022,4,2,15,36,20,3977630],\"endDate\":[2022,4,3,15,36,20,3977630],\"attendees\":[]}]";
-        Meeting meeting = new Meeting(
+        String expectedValue = "[{\"id\":0,\"name\":\"Test\",\"description\":\"Performing a test\",\"responsiblePersonId\":0,\"category\":\"CODE_MONKEY\",\"type\":\"LIVE\",\"startDate\":\"2022-04-02T15:36:20\",\"endDate\":\"2022-04-03T15:36:20\",\"attendees\":[]},{\"id\":0,\"name\":\"Test\",\"description\":\"Performing a test\",\"responsiblePersonId\":0,\"category\":\"CODE_MONKEY\",\"type\":\"LIVE\",\"startDate\":\"2022-04-02T15:36:20\",\"endDate\":\"2022-04-03T15:36:20\",\"attendees\":[]}]";
+       Meeting meeting = new Meeting(
                 id,
                 name,
                 description,

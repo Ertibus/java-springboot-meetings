@@ -1,10 +1,13 @@
 package lt.visma.geeks.intern.meetings.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.time.LocalDateTime;
 
 public class Attendee {
     private final int id;
     private final String name;
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     private final LocalDateTime time;
 
     public Attendee(int id, String name, LocalDateTime time) {

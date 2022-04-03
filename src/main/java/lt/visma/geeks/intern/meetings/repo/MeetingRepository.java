@@ -1,7 +1,13 @@
 package lt.visma.geeks.intern.meetings.repo;
 
 import lt.visma.geeks.intern.meetings.model.*;
+import lt.visma.geeks.intern.meetings.transformer.JsonTransformer;
+import org.json.simple.JSONArray;
+import org.json.simple.parser.JSONParser;
 
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +21,6 @@ public class MeetingRepository {
     private static List<Meeting> meetingList;
     private final String jsonFile;
 
-
     public MeetingRepository() {
         this(DEFAULT_JSON);
     }
@@ -23,6 +28,28 @@ public class MeetingRepository {
     public MeetingRepository(String jsonFile) {
         this.jsonFile = jsonFile;
         meetingList = new ArrayList<>();
+        loadData();
+    }
+
+    private void saveData() {
+        try(FileWriter file = new FileWriter(jsonFile)) {
+            String json = JsonTransformer.toJsonString(meetingList);
+            file.write(json);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void loadData() {
+        File f = new File(jsonFile);
+        if(!f.exists() || f.isDirectory() || f.length() == 0) { return; }
+        try (FileReader file = new FileReader(jsonFile)) {
+            JSONParser parser = new JSONParser();
+            JSONArray jsonArray = (JSONArray) parser.parse(file);
+            meetingList = JsonTransformer.fromJsonArray(jsonArray);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public Meeting findMeeting(int id) {
@@ -32,6 +59,7 @@ public class MeetingRepository {
         }
         return meetingOption.get();
     }
+
     public List<Meeting> findMeetings() {
         return meetingList;
     }
@@ -75,12 +103,14 @@ public class MeetingRepository {
 
     public void addMeeting(Meeting newMeeting) {
         meetingList.add(newMeeting);
+        saveData();
     }
 
     public void removeMeeting(int id, int responsibleId) {
         Meeting meeting = findMeeting(id);
         if (meeting == null || meeting.getResponsiblePersonId() != responsibleId) { return; }
         meetingList.remove(meeting);
+        saveData();
     }
 
     public String addAttendee(int meetingId, Attendee attendee) {
@@ -106,6 +136,7 @@ public class MeetingRepository {
         newList.add(attendee);
         meeting.setAttendees(newList);
         meetingList.set(index, meeting);
+        saveData();
         return null;
     }
 
@@ -123,5 +154,6 @@ public class MeetingRepository {
         List<Attendee> newList = meeting.getAttendees().stream().filter(att -> att.getId() != attendeeId).collect(Collectors.toList());
         meeting.setAttendees(newList);
         meetingList.set(index, meeting);
+        saveData();
     }
 }
