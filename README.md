@@ -1,13 +1,14 @@
 # Java Developer Task 
 Create a web application to manage Visma’s internal meetings using Java Spring Boot. Requirements: 
 
-Endpoints:
-- `/api/meetings` - find meetings (With optional parameters)
-- `/api/meetings` - new meeting (RequestBody: Meeting)
-- `/api/{userId}/meetings/{meetingId}` - delete meeting
-- `/api/meetings/{meetingId}` add attendee to the meeting (RequestBody: Attendee)
-- `/api/meetings/{meetingId}/{userId}` remove attendee from the meeting
-- `/api/meetings` remove 
+- [X] Endpoints:
+	- `/api/meetings` - find meetings (With optional parameters)
+	- `/api/meetings` - new meeting (RequestBody: Meeting)
+	- `/api/{userId}/meetings/{meetingId}` - delete meeting
+	- `/api/meetings/{meetingId}` add attendee to the meeting (RequestBody: Attendee)
+	- `/api/meetings/{meetingId}/{userId}` remove attendee from the meeting
+	- `/api/meetings` remove 
+
 
 - [X] Rest API endpoint to create a new meeting. All the meeting data should be stored in a JSON file. Application should retain data between restarts. Meeting model should contain the following properties: 
 	- Name 
