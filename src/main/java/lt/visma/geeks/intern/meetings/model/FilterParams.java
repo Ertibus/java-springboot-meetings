@@ -13,13 +13,13 @@ public class FilterParams {
     private final Optional<Integer> attendees;
 
     private FilterParams(Builder builder) {
-        description = (builder.description == null)?  Optional.empty() : Optional.of(builder.description);
-        responsiblePersonId = (builder.responsiblePersonId == 0)? Optional.empty() : Optional.of(builder.responsiblePersonId);
+        description = (builder.description == null || builder.description.isBlank())?  Optional.empty() : Optional.of(builder.description);
+        responsiblePersonId = (builder.responsiblePersonId == -1)? Optional.empty() : Optional.of(builder.responsiblePersonId);
         category = (builder.category == null)? Optional.empty() : Optional.of(builder.category);
         type =  (builder.type == null)? Optional.empty() : Optional.of(builder.type);;
         fromDate = (builder.fromDate == null)? Optional.empty() : Optional.of(builder.fromDate);;
         toDate =  (builder.toDate == null)? Optional.empty() : Optional.of(builder.toDate);;
-        attendees =  (builder.attendees == 0)? Optional.empty() : Optional.of(builder.attendees);;
+        attendees =  (builder.attendees == -1)? Optional.empty() : Optional.of(builder.attendees);;
     }
 
     public Optional<String> getDescription() {
@@ -52,12 +52,12 @@ public class FilterParams {
 
     public static class Builder {
         private String description;
-        private int responsiblePersonId;
+        private int responsiblePersonId = -1;
         private MeetingCategory category;
         private MeetingType type;
         private LocalDateTime fromDate;
         private LocalDateTime toDate;
-        private int attendees;
+        private int attendees = -1;
 
         public Builder description(final String description) {
             this.description = description;
@@ -68,11 +68,11 @@ public class FilterParams {
             return this;
         }
         public Builder category(final MeetingCategory category) {
-            this.description = description;
+            this.category = category;
             return this;
         }
         public Builder type(final MeetingType type) {
-            this.description = description;
+            this.type = type;
             return this;
         }
         public Builder fromDate(final LocalDateTime fromDate) {

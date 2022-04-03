@@ -154,7 +154,7 @@ class MeetingRepositoryTest {
         meeting1.setType(type1);
 
         Meeting meeting2 = new Meeting();
-        meeting1.setType(type2);
+        meeting2.setType(type2);
 
         repository.addMeeting(meeting1);
         repository.addMeeting(meeting2);

@@ -1,12 +1,12 @@
 package lt.visma.geeks.intern.meetings.repo;
 
-import lt.visma.geeks.intern.meetings.model.Attendee;
-import lt.visma.geeks.intern.meetings.model.FilterParams;
-import lt.visma.geeks.intern.meetings.model.Meeting;
+import lt.visma.geeks.intern.meetings.model.*;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -37,7 +37,40 @@ public class MeetingRepository {
     }
 
     public List<Meeting> findMeetings(FilterParams filter) {
-        return meetingList;
+        Stream<Meeting> meetingStream = meetingList.stream();
+
+        if (filter.getResponsiblePersonId().isPresent()) {
+            int value = filter.getResponsiblePersonId().get();
+            System.out.println(value);
+            meetingStream = meetingStream.filter(meeting -> meeting.getResponsiblePerson().getId() == value);
+        }
+        if (filter.getDescription().isPresent()) {
+            String description = filter.getDescription().get();
+            meetingStream = meetingStream.filter(meeting ->
+                    Pattern.compile(description, Pattern.CASE_INSENSITIVE)
+                            .matcher(meeting.getDescription()).find());
+        }
+        if (filter.getCategory().isPresent()) {
+            MeetingCategory category = filter.getCategory().get();
+            meetingStream = meetingStream.filter(meeting -> meeting.getCategory().equals(category));
+        }
+        if (filter.getType().isPresent()) {
+            MeetingType type = filter.getType().get();
+            meetingStream = meetingStream.filter(meeting -> meeting.getType().equals(type));
+        }
+        if (filter.getFromDate().isPresent()) {
+            LocalDateTime fromDate = filter.getFromDate().get();
+            meetingStream = meetingStream.filter(meeting -> meeting.getStartDate().compareTo(fromDate) >= 0);
+        }
+        if (filter.getToDate().isPresent()) {
+            LocalDateTime toDate = filter.getToDate().get();
+            meetingStream = meetingStream.filter(meeting -> meeting.getStartDate().compareTo(toDate) < 0);
+        }
+        if (filter.getAttendees().isPresent()) {
+            int attendees = filter.getAttendees().get();
+            meetingStream = meetingStream.filter(meeting -> meeting.getAttendees().size() >= attendees);
+        }
+        return meetingStream.collect(Collectors.toList());
     }
 
     public void addMeeting(Meeting newMeeting) {
