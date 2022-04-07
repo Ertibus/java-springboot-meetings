@@ -2,6 +2,7 @@ package lt.visma.geeks.intern.meetings.controller;
 
 import lt.visma.geeks.intern.meetings.model.*;
 import lt.visma.geeks.intern.meetings.repo.MeetingRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -20,15 +21,8 @@ import java.util.List;
 @RestController
 @RequestMapping(value = "/api", produces = MediaType.APPLICATION_JSON_VALUE)
 public class MeetingController {
-    private static MeetingRepository repository;
-
-    /**
-     * Initialize controller
-     */
-    public MeetingController() {
-        repository = new MeetingRepository();
-    }
-
+    @Autowired
+    private MeetingRepository repository;
     /**
      * Create new meeting endpoint
      * @param meeting - RequestBody of the meeting

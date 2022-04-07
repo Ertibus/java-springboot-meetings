@@ -4,6 +4,9 @@ import lt.visma.geeks.intern.meetings.model.*;
 import lt.visma.geeks.intern.meetings.transformer.JsonTransformer;
 import org.json.simple.JSONArray;
 import org.json.simple.parser.JSONParser;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.io.File;
 import java.io.FileReader;
@@ -25,6 +28,7 @@ import java.util.stream.Stream;
  * @see Meeting
  * @see JsonTransformer
  */
+@Service
 public class MeetingRepository {
     private final static String DEFAULT_JSON = "database.json";
     private static List<Meeting> meetingList;
