@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * REST controller for Internal Meeting application.
@@ -95,30 +96,16 @@ public class MeetingController {
             @RequestParam(required = false) LocalDateTime toDate,
             @RequestParam(required = false) Integer attendees
     ) {
-        FilterParams.Builder builder = new FilterParams.Builder();
-        if (responsible != null) {
-            builder.responsiblePersonId(responsible);
-        }
+        FilterParams filterParams = FilterParams.builder()
+                .responsiblePersonId(responsible)
+                .description(desc)
+                .fromDate(fromDate)
+                .toDate(toDate)
+                .attendees(attendees)
+                .category(category)
+                .type(type)
+                .build();
 
-        if (desc != null && !desc.isBlank()) {
-            builder.description(desc);
-        }
-        if (fromDate != null) {
-            builder.fromDate(fromDate);
-        }
-        if (toDate != null) {
-            builder.toDate(toDate);
-        }
-        if (attendees != null) {
-            builder.attendees(attendees);
-        }
-        if (category != null) {
-            builder.category(category);
-        }
-        if (type != null) {
-            builder.type(type);
-        }
-
-        return repository.findMeetings(builder.build());
+        return repository.findMeetings(filterParams);
     }
 }

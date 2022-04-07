@@ -17,6 +17,7 @@
 		<java.version>17</java.version>
 		<junit.api.version>5.8.2</junit.api.version>
 		<json.simple.version>0.4</json.simple.version>
+		<lombok.version>1.18.22</lombok.version>
 	</properties>
 	<dependencies>
 		<!-- Spring Boot -->
@@ -59,6 +60,13 @@
 			<groupId>com.fasterxml.jackson.datatype</groupId>
 			<artifactId>jackson-datatype-jsr310</artifactId>
 			<version>2.6.6</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<version>${lombok.version}</version>
+			<scope>provided</scope>
 		</dependency>
 		<!-- OTHER -->
 	</dependencies>

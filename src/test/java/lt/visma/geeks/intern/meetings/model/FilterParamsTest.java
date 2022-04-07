@@ -2,6 +2,8 @@ package lt.visma.geeks.intern.meetings.model;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.Optional;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
@@ -15,8 +17,8 @@ import static org.junit.jupiter.api.Assertions.*;
 class FilterParamsTest {
     @Test
     void testBuilder() {
-        FilterParams filterParams = new FilterParams.Builder().description("java").build();
-        assertTrue(filterParams.getDescription().isPresent());
-        assertTrue(filterParams.getAttendees().isEmpty());
+        FilterParams filterParams = FilterParams.builder().description("java").build();
+        assertTrue(filterParams.getDescription() != null);
+        assertTrue(filterParams.getAttendees() == null);
     }
 }

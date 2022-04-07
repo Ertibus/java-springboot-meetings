@@ -9,6 +9,7 @@ import java.io.File;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -107,7 +108,7 @@ class MeetingRepositoryTest {
         repository.addMeeting(meeting1);
         repository.addMeeting(meeting2);
 
-        FilterParams filter = new FilterParams.Builder().description(description).build();
+        FilterParams filter = FilterParams.builder().description(description).build();
         int found = repository.findMeetings().size();
         assertEquals(2, found);
         found = repository.findMeetings(filter).size();
@@ -127,7 +128,7 @@ class MeetingRepositoryTest {
         repository.addMeeting(meeting1);
         repository.addMeeting(meeting2);
 
-        FilterParams filter = new FilterParams.Builder().responsiblePersonId(attendeeId1).build();
+        FilterParams filter = FilterParams.builder().responsiblePersonId(attendeeId1).build();
 
         int found = repository.findMeetings().size();
         assertEquals(2, found);
@@ -148,7 +149,7 @@ class MeetingRepositoryTest {
         repository.addMeeting(meeting1);
         repository.addMeeting(meeting2);
 
-        FilterParams filter = new FilterParams.Builder().category(category1).build();
+        FilterParams filter = FilterParams.builder().category(category1).build();
         int found = repository.findMeetings().size();
         assertEquals(2, found);
         found = repository.findMeetings(filter).size();
@@ -169,7 +170,7 @@ class MeetingRepositoryTest {
         repository.addMeeting(meeting1);
         repository.addMeeting(meeting2);
 
-        FilterParams filter = new FilterParams.Builder().type(type1).build();
+        FilterParams filter = FilterParams.builder().type(type1).build();
         int found = repository.findMeetings().size();
         assertEquals(2, found);
         found = repository.findMeetings(filter).size();
@@ -202,16 +203,16 @@ class MeetingRepositoryTest {
         int found;
         FilterParams filter;
         // Just before
-        filter = new FilterParams.Builder().fromDate(fromDate).build();
+        filter = FilterParams.builder().fromDate(fromDate).build();
         found = repository.findMeetings(filter).size();
         assertEquals(2, found);
         // Just after
-        filter = new FilterParams.Builder().toDate(toDate).build();
+        filter = FilterParams.builder().toDate(toDate).build();
         found = repository.findMeetings(filter).size();
 
         assertEquals(2, found);
         // In between
-        filter = new FilterParams.Builder().fromDate(fromDate).toDate(toDate).build();
+        filter = FilterParams.builder().fromDate(fromDate).toDate(toDate).build();
         found = repository.findMeetings(filter).size();
         assertEquals(1, found);
     }
@@ -226,7 +227,7 @@ class MeetingRepositoryTest {
         repository.addMeeting(meeting1);
         repository.addMeeting(meeting2);
 
-        FilterParams filter = new FilterParams.Builder().attendees(2).build();
+        FilterParams filter = FilterParams.builder().attendees(2).build();
 
         int found = repository.findMeetings(filter).size();
 
