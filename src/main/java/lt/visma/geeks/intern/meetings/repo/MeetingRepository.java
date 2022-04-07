@@ -109,40 +109,24 @@ public class MeetingRepository {
      * @see FilterParams
      */
     public List<Meeting> findMeetings(FilterParams filter) {
-        Stream<Meeting> meetingStream = meetingList.stream();
+        Integer responsible = filter.getResponsiblePersonId();
+        String description = filter.getDescription();
+        MeetingCategory category = filter.getCategory();
+        MeetingType type = filter.getType();
+        LocalDateTime fromDate = filter.getFromDate();
+        LocalDateTime toDate = filter.getToDate();
+        Integer attendees = filter.getAttendees();
 
-        if (filter.getResponsiblePersonId() != null) {
-            int value = filter.getResponsiblePersonId();
-            System.out.println(value);
-            meetingStream = meetingStream.filter(meeting -> meeting.getResponsiblePersonId() == value);
-        }
-        if (filter.getDescription() != null && !filter.getDescription().isBlank()) {
-            String description = filter.getDescription();
-            meetingStream = meetingStream.filter(meeting ->
-                    Pattern.compile(description, Pattern.CASE_INSENSITIVE)
-                            .matcher(meeting.getDescription()).find());
-        }
-        if (filter.getCategory() != null) {
-            MeetingCategory category = filter.getCategory();
-            meetingStream = meetingStream.filter(meeting -> meeting.getCategory().equals(category));
-        }
-        if (filter.getType() != null) {
-            MeetingType type = filter.getType();
-            meetingStream = meetingStream.filter(meeting -> meeting.getType().equals(type));
-        }
-        if (filter.getFromDate() != null) {
-            LocalDateTime fromDate = filter.getFromDate();
-            meetingStream = meetingStream.filter(meeting -> meeting.getStartDate().compareTo(fromDate) >= 0);
-        }
-        if (filter.getToDate() != null) {
-            LocalDateTime toDate = filter.getToDate();
-            meetingStream = meetingStream.filter(meeting -> meeting.getStartDate().compareTo(toDate) < 0);
-        }
-        if (filter.getAttendees() != null) {
-            int attendees = filter.getAttendees();
-            meetingStream = meetingStream.filter(meeting -> meeting.getAttendees().size() >= attendees);
-        }
-        return meetingStream.collect(Collectors.toList());
+        return meetingList.stream()
+                .filter(meeting ->
+                        (responsible == null || meeting.getResponsiblePersonId() == responsible)
+                        && (description == null || description.isBlank() || Pattern.compile(description, Pattern.CASE_INSENSITIVE).matcher(meeting.getDescription()).find())
+                        && (category == null || meeting.getCategory().equals(category))
+                        && (type == null || meeting.getType().equals(type))
+                        && (fromDate == null || meeting.getStartDate().compareTo(fromDate) >= 0)
+                        && (toDate == null || meeting.getStartDate().compareTo(toDate) < 0)
+                        && (attendees == null || meeting.getAttendees().size() >= attendees)
+                ).collect(Collectors.toList());
     }
 
     public void addMeeting(Meeting newMeeting) {
