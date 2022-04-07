@@ -4,6 +4,9 @@ import lt.visma.geeks.intern.meetings.model.*;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.test.context.TestPropertySource;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import java.io.File;
 import java.time.LocalDateTime;
@@ -24,7 +27,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * @see Meeting
  */
 class MeetingRepositoryTest {
-    private final static String TESTING_JSON = "test_database.json";
+    private static final String TESTING_JSON = "test_database.json";
     private MeetingRepository repository;
 
     @BeforeEach

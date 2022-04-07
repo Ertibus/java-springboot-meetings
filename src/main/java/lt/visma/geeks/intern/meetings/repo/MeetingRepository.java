@@ -4,8 +4,9 @@ import lt.visma.geeks.intern.meetings.model.*;
 import lt.visma.geeks.intern.meetings.transformer.JsonTransformer;
 import org.json.simple.JSONArray;
 import org.json.simple.parser.JSONParser;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
@@ -28,28 +29,26 @@ import java.util.stream.Stream;
  * @see Meeting
  * @see JsonTransformer
  */
+@PropertySource("/application.properties")
 @Service
 public class MeetingRepository {
-    private final static String DEFAULT_JSON = "database.json";
     private static List<Meeting> meetingList;
-    private final String jsonFile;
+    @Value("${database.path}")
+    private String jsonFile;
 
     /**
      * Initialize default repo
      */
     public MeetingRepository() {
-        this(DEFAULT_JSON);
+        this(null);
+    }
+    public MeetingRepository(String json) {
+        meetingList = new ArrayList<>();
+        if (json != null) {
+            jsonFile = json;
+        }
     }
 
-    /**
-     * Construct a new repository with a custom JSON file
-     * @param jsonFile
-     */
-    public MeetingRepository(String jsonFile) {
-        this.jsonFile = jsonFile;
-        meetingList = new ArrayList<>();
-        loadData();
-    }
 
     /**
      * Write JSON data
@@ -85,6 +84,7 @@ public class MeetingRepository {
      * @see Meeting
      */
     public Meeting findMeeting(int id) {
+        loadData();
         Optional<Meeting> meetingOption = meetingList.stream().filter(meet -> meet.getId() == id).findFirst();
         if (meetingOption.isEmpty()) {
             return null;
@@ -98,6 +98,7 @@ public class MeetingRepository {
      * @see Meeting
      */
     public List<Meeting> findMeetings() {
+        loadData();
         return meetingList;
     }
 
@@ -109,6 +110,7 @@ public class MeetingRepository {
      * @see FilterParams
      */
     public List<Meeting> findMeetings(FilterParams filter) {
+        loadData();
         Integer responsible = filter.getResponsiblePersonId();
         String description = filter.getDescription();
         MeetingCategory category = filter.getCategory();
