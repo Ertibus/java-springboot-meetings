@@ -93,46 +93,37 @@ public class MeetingController {
      */
     @GetMapping("/meetings")
     public List<Meeting> findMeetings(
-            @RequestParam(required = false) String responsible,
+            @RequestParam(required = false) Integer responsible,
             @RequestParam(required = false) String desc,
-            @RequestParam(required = false) String category,
-            @RequestParam(required = false) String type,
-            @RequestParam(required = false) String fromDate,
-            @RequestParam(required = false) String toDate,
-            @RequestParam(required = false) String attendees
+            @RequestParam(required = false) MeetingCategory category,
+            @RequestParam(required = false) MeetingType type,
+            @RequestParam(required = false) LocalDateTime fromDate,
+            @RequestParam(required = false) LocalDateTime toDate,
+            @RequestParam(required = false) Integer attendees
     ) {
         FilterParams.Builder builder = new FilterParams.Builder();
-        try {
-            int responsibleId = Integer.parseInt(responsible);
-            builder.responsiblePersonId(responsibleId);
-        } catch (Exception ignored) { }
-        try {
+        if (responsible != null) {
+            builder.responsiblePersonId(responsible);
+        }
+
+        if (desc != null && !desc.isBlank()) {
             builder.description(desc);
-        } catch (Exception ignored) { }
-
-        try {
-            LocalDateTime from = LocalDateTime.parse(fromDate);
-            builder.fromDate(from);
-        } catch (Exception ignored) { }
-        try {
-            LocalDateTime to = LocalDateTime.parse(toDate);
-            builder.toDate(to);
-        } catch (Exception ignored) { }
-
-        try {
-            int n = Integer.parseInt(attendees);
-            builder.attendees(n);
-        } catch (Exception ignored) { }
-
-        try {
-            MeetingCategory meetingCategory = MeetingCategory.valueOf(category);
-            builder.category(meetingCategory);
-        } catch (Exception ignored) { }
-
-        try {
-            MeetingType meetingType = MeetingType.valueOf(type);
-            builder.type(meetingType);
-        } catch (Exception ignored) { }
+        }
+        if (fromDate != null) {
+            builder.fromDate(fromDate);
+        }
+        if (toDate != null) {
+            builder.toDate(toDate);
+        }
+        if (attendees != null) {
+            builder.attendees(attendees);
+        }
+        if (category != null) {
+            builder.category(category);
+        }
+        if (type != null) {
+            builder.type(type);
+        }
 
         return repository.findMeetings(builder.build());
     }
